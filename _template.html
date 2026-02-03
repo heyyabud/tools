@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tool Name</title>
+  <meta name="description" content="Brief description of what this tool does">
+  <style>
+    :root {
+      --bg: #0a0f0d;
+      --surface: #121a16;
+      --surface-elevated: #1a2420;
+      --text: #e8f5e9;
+      --text-muted: #81c784;
+      --accent: #4ade80;
+      --accent-hover: #22c55e;
+      --border: rgba(74, 222, 128, 0.25);
+      --error: #f87171;
+      --success: #4ade80;
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-size: 1rem;
+    }
+
+    /* Form Elements */
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 1rem;
+      font-family: inherit;
+      margin-bottom: 16px;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(74, 222, 128, 0.1);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Cards/Sections */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    /* Output/Result Areas */
+    .output {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-height: 100px;
+    }
+
+    /* Status Messages */
+    .status {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+
+    .status.success {
+      background: rgba(74, 222, 128, 0.15);
+      border: 1px solid var(--success);
+      color: var(--success);
+    }
+
+    .status.error {
+      background: rgba(248, 113, 113, 0.15);
+      border: 1px solid var(--error);
+      color: var(--error);
+    }
+
+    /* Utility Classes */
+    .hidden { display: none !important; }
+    .flex { display: flex; gap: 12px; }
+    .flex-wrap { flex-wrap: wrap; }
+    .mt-16 { margin-top: 16px; }
+    .mb-16 { margin-bottom: 16px; }
+
+    /* Back Link */
+    .back-link {
+      display: inline-block;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
+    }
+
+    .back-link::before {
+      content: '← ';
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">Back to tools</a>
+    
+    <h1>🔧 Tool Name</h1>
+    <p class="subtitle">Brief description of what this tool does.</p>
+
+    <div class="card">
+      <h2>Input</h2>
+      <label for="input">Your input</label>
+      <textarea id="input" placeholder="Enter something..."></textarea>
+      
+      <div class="flex">
+        <button class="btn btn-primary" onclick="processInput()">Process</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Output</h2>
+      <div id="status" class="status hidden"></div>
+      <div id="output" class="output">Results will appear here...</div>
+      <button class="btn btn-secondary mt-16" onclick="copyOutput()">Copy to Clipboard</button>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const inputEl = document.getElementById('input');
+    const outputEl = document.getElementById('output');
+    const statusEl = document.getElementById('status');
+
+    // Main processing function
+    function processInput() {
+      const input = inputEl.value.trim();
+      
+      if (!input) {
+        showStatus('Please enter some input', 'error');
+        return;
+      }
+
+      try {
+        // TODO: Replace with actual processing logic
+        const result = input.toUpperCase();
+        
+        outputEl.textContent = result;
+        showStatus('Processed successfully!', 'success');
+      } catch (err) {
+        showStatus(`Error: ${err.message}`, 'error');
+      }
+    }
+
+    // Helper functions
+    function showStatus(message, type) {
+      statusEl.textContent = message;
+      statusEl.className = `status ${type}`;
+      statusEl.classList.remove('hidden');
+      
+      if (type === 'success') {
+        setTimeout(() => statusEl.classList.add('hidden'), 3000);
+      }
+    }
+
+    function clearAll() {
+      inputEl.value = '';
+      outputEl.textContent = 'Results will appear here...';
+      statusEl.classList.add('hidden');
+    }
+
+    function copyOutput() {
+      const text = outputEl.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        showStatus('Copied to clipboard!', 'success');
+      }).catch(() => {
+        showStatus('Failed to copy', 'error');
+      });
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+        processInput();
+      }
+    });
+  </script>
+</body>
+</html>
